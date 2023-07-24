@@ -19,7 +19,7 @@ export const get = () => rss({
     items: sortedPosts.map(item => ({
         title: item.data.title,
         description: item.data.description,
-        link: `${item.slug}`,
+        link: `blog/${item.slug}`,
         pubDate: new Date(item.data.date),
     })),
     // (optional) inject custom xml
