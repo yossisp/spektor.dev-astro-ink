@@ -17,7 +17,7 @@ const { post: { data: post, slug } } = Astro.props
     </div>
     <div class="flex-1">
         <h4 class="post-preview__title dark:text-theme-dark-primary">
-            <a href={`/blog/${slug}`} title={post.title}>{post.title}</a>
+            <a href={`/${slug}`} title={post.title}>{post.title}</a>
         </h4>
         <p class="post-preview__desc">
             {post.description}
