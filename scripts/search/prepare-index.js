@@ -7,7 +7,7 @@ import grayMatter from 'gray-matter'
     // prepare the dirs
     const srcDir = path.join(process.cwd(), 'src')
     const publicDir = path.join(process.cwd(), 'public')
-    const contentBlogDir = path.join(srcDir, 'content', 'blog')
+    const contentBlogDir = path.join(srcDir, 'content')
     const contentFilePattern = path.join(contentBlogDir, '*.md')
     const indexFile = path.join(publicDir, 'search-index.json')
     const getSlugFromPathname = (pathname) => path.basename(pathname, path.extname(pathname))
