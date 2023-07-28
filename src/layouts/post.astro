@@ -36,7 +36,7 @@ const AUTHOR_AVATAR = content.authorImage ? content.authorImage : SITE?.authorIm
                             <span class="post__author">{ AUTHOR_NAME }</span>
                     }
                     {!AUTHOR_AVATAR ? ' | ' : ''}
-                    <span class="post__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(content.date))}
+                    <span class="post__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(content.data.date))}
                         <!-- Post Stats? -->
                         <!-- | <Icon class="w-5 h-5 inline-block" pack="mdi" name="eye" /> {stats.views} views -->
                         <!-- | <Icon class="w-5 h-5 inline-block" pack="mdi" name="clock" /> 2 mins -->
@@ -45,7 +45,7 @@ const AUTHOR_AVATAR = content.authorImage ? content.authorImage : SITE?.authorIm
             </h5>
             <div style="padding:6px;"/>
             <div class="post__tags">
-                { content.tags.length > 0 && content.tags.map(tag => {
+                { content.data.tags.length > 0 && content.data.tags.map(tag => {
                     return <a class="post__tag" href={`/tags/${tag}`} title={tag}>
                         <span style="padding-right:8px;">
                             <span
