@@ -5,8 +5,6 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import { defineConfig } from "astro/config";
-import vercel from "@astrojs/vercel/serverless";
-import markdoc from "@astrojs/markdoc";
 import netlify from "@astrojs/netlify/functions";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
