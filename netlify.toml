@@ -6,3 +6,5 @@ from = "https://spektordev.netlify.com/*"
 to = "https://www.spektor.dev/:splat"
 status = 301
 force = true
+[functions]
+    external_node_modules = ["astro"]
