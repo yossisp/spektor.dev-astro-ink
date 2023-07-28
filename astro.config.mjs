@@ -26,7 +26,7 @@ const __dirname = dirname(__filename);
 // https://astro.build/config
 export default defineConfig( /** @type {import('astro').AstroUserConfig} */{
   // root: '.',     // Where to resolve all URLs relative to. Useful if you have a monorepo project.
-  // outDir: './dist',       // When running `astro build`, path to final static output
+  outDir: './dist',       // When running `astro build`, path to final static output
   // publicDir: './public',   // A folder of static files Astro will copy to the root. Useful for favicons, images, and other files that don’t need processing.
   output: 'server',
   site: 'https://astro-ink.vercel.app',
