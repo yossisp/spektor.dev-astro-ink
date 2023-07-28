@@ -14,7 +14,7 @@ tags:
 ---
 
 <div style="display:flex;justify-content:center;padding-right:10%;padding-bottom:50px;padding-top:30px;">
-    <img style="min-width:100px;max-width:200px" src="./postgresql_logo.svg"
+    <img style="min-width:100px;max-width:200px" src="/images/blog/postgresql_logo.svg"
             alt="Postgres Logo"
             style="margin:0;"
             />

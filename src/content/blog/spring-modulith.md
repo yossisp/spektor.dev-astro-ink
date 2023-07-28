@@ -8,14 +8,14 @@ description: "Spring Modulith is a Spring Boot project which focuses on architec
 tags:
   - java
   - spring
-  - DDD
+  - ddd
   - event-driven
 
 excerpt: Spring Modulith is a Spring Boot project which focuses on architectural best-practices...
 ---
 
 <div style="display:flex;justify-content:center;padding-right:10%;padding-bottom:50px;padding-top:30px;">
-    <img style="min-width:60%;max-width:70%;" src="./Spring_Framework_Logo_2018.svg"
+    <img style="min-width:60%;max-width:70%;" src="/images/blog/Spring_Framework_Logo_2018.svg"
             alt="Spring Framework Logo"
             style="margin:0;"
             />

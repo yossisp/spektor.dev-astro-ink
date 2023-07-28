@@ -46,8 +46,8 @@ module.exports = {
      */
     orangecity: {
         colors: {
-            primary: colors.orange[700],
-            secondary: colors.orange[800],
+            primary: colors.orange[500],
+            secondary: colors.orange[500],
             dark: {
                 primary: colors.orange[300],
                 secondary: colors.orange[500]

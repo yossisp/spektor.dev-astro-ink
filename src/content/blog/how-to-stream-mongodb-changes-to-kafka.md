@@ -68,7 +68,7 @@ CMD ["./mongoinit.sh"]
 
 Now that we have a custom MongoDB image we can create the `docker-compose.yml` file which will contain all the necessary parts we need for the project: a Kafka broker instance, MongoDB instance, Debezium instance and [Kafdrop](https://github.com/obsidiandynamics/kafdrop) instance which allows to browse Kafka topics/message via a web GUI:
 
-```yml
+```yaml
 version: "3"
 services:
   kafdrop:

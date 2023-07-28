@@ -30,7 +30,7 @@ Flink has [several API layers](https://nightlies.apache.org/flink/flink-docs-rel
 
 First we need to set up a Flink application cluster. By default official Flink docker image comes with a limited set of connectors. For the demo we'll need a Kafka and JDBC connector as well as Postgres driver therefore we'll extend the official docker image with the jar files of the connectors. Kafka connector can be downloaded [here](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/connectors/table/kafka/) while JDBC connector and Postgres driver can be downloaded from [here](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/connectors/table/jdbc/). Place the downloaded files in the same folder as the `Dockerfile`. In the `Dockerfile` the jar files are copied to `/opt/flink/lib` folder because Flink classpath is set to this folder:
 
-```dockerfile
+```docker
 FROM flink:1.14.0
 COPY flink-connector-jdbc_2.12-1.14.0.jar /opt/flink/lib/flink-connector-jdbc_2.12-1.14.0.jar
 COPY flink-sql-connector-kafka_2.11-1.14.0.jar /opt/flink/lib/flink-sql-connector-kafka_2.11-1.14.0.jar
@@ -39,7 +39,7 @@ COPY postgresql-42.3.1.jar /opt/flink/lib/postgresql-42.3.1.jar
 
 Place the `docker-compose.yml` in the same folder as the `Dockerfile`:
 
-```yml
+```yaml
 version: "2.1"
 services:
   jobmanager:

@@ -36,7 +36,7 @@ This is the second post from [change data capture](https://en.wikipedia.org/wiki
 
 In this post I will show how to set up Debezium with Postgres and MySQL databases. As in the [previous post](https://www.spektor.dev/how-to-stream-mongodb-changes-to-kafka/) the prerequisites are Debezium and Kafka images. Postgres and MySQL official images will be used in the `docker-compose.yml` below:
 
-```yml
+```yaml
 version: "3"
 services:
   kafdrop:

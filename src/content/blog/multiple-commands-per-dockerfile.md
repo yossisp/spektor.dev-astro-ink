@@ -22,7 +22,7 @@ I dabbled into .NET recently and after finishing the project I ended up with 2 m
 
 Below you can see a sample Dockerfile for a .NET application with multiple microservices:
 
-```dockerfile
+```docker
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 

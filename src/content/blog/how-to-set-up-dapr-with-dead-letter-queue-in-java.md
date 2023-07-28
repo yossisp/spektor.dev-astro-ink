@@ -14,7 +14,7 @@ excerpt: Dapr is an amazing open-source project which was initially started at M
 ---
 
 <div style="display:flex;justify-content:center;padding-right:10%;padding-bottom:50px;padding-top:30px;">
-    <img style="min-width:100px;max-width:200px" src="./dapr_logo.svg"
+    <img style="min-width:100px;max-width:200px" src="/images/blog/dapr_logo.svg"
             alt="DAPR Logo"
             style="margin:0;"
             />

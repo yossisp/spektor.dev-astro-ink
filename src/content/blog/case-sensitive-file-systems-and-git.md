@@ -24,7 +24,7 @@ After some [googling](https://stackoverflow.com/a/53116/5863693) I found out tha
 git config core.ignorecase false
 ```
 
-I deployed but the build failed again &#128518. This time the error was:
+I deployed but the build failed again. This time the error was:
 
 ```
 error Multiple "root" queries found: "BioQuery" and "BioQuery".

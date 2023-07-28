@@ -5,7 +5,7 @@ import { SITE, USE_POST_IMG_OVERLAY, USE_AUTHOR_CARD, USE_SUBSCRIPTION } from '$
 import MainLayout from '$/components/MainLayout.astro'
 import BaseHead from '$/components/BaseHead.astro'
 import Prose from '$/components/Prose.astro'
-
+import colors from 'tailwindcss/colors'
 interface Props {
     content: CollectionEntry<'blog'>['data'],
     stats: {
@@ -25,9 +25,6 @@ const AUTHOR_AVATAR = content.authorImage ? content.authorImage : SITE?.authorIm
     </head>
     <MainLayout>
         <div class="post__header">
-            <div class="post__tags">
-                { content.tags.length > 0 && content.tags.map(tag => <a class="post__tag" href={`/tags/${tag}`} title={tag}>{tag}</a>) }
-            </div>
             <h1 class="post__title">{ content.title }</h1>
             <h5 class={`post__desc ${AUTHOR_AVATAR ? 'flex flex-row gap-2' : ''}`}>
                 { AUTHOR_AVATAR ? <img class="avatar" src={AUTHOR_AVATAR} alt={`${ AUTHOR_NAME }'s avatar`} /> : ''}
@@ -41,11 +38,27 @@ const AUTHOR_AVATAR = content.authorImage ? content.authorImage : SITE?.authorIm
                     {!AUTHOR_AVATAR ? ' | ' : ''}
                     <span class="post__date">{ new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(content.date))}
                         <!-- Post Stats? -->
-                        | <Icon class="w-5 h-5 inline-block" pack="mdi" name="eye" /> {stats.views} views
+                        <!-- | <Icon class="w-5 h-5 inline-block" pack="mdi" name="eye" /> {stats.views} views -->
                         <!-- | <Icon class="w-5 h-5 inline-block" pack="mdi" name="clock" /> 2 mins -->
                     </span>
                 </div>
             </h5>
+            <div style="padding:6px;"/>
+            <div class="post__tags">
+                { content.tags.length > 0 && content.tags.map(tag => {
+                    return <a class="post__tag" href={`/tags/${tag}`} title={tag}>
+                        <span style="padding-right:8px;">
+                            <span
+                                class="article-tags"
+                                style={`color:${colors.orange[500]};padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;border:1px solid ${colors.orange[500]};border-radius:4px;`}
+                            >
+                                {tag}
+                            </span>
+                            </span>
+                        </a>
+                    }
+                )}
+            </div>
         </div>
         {
             content.image ?

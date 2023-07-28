@@ -23,7 +23,7 @@ Surprisingly, I couldn't find much information on using Vault with Vault Agent v
 **WARNING:** the setup is intentionally simplified, please don't use it in production.
 
 First of all we'll use the official Vault docker images for the `docker-compose.yml`:
-```yml
+```yaml
 version: '3.7'
 
 services:
