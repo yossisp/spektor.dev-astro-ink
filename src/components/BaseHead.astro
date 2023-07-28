@@ -53,8 +53,6 @@ const { title = SITE.title, description, permalink, image } = Astro.props;
 {description && <meta property="twitter:description" content={description} />}
 {image && <meta property="twitter:image" content={image} />}
 
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-></script>
 <script is:inline>
   const theme = (() => {
     if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
@@ -71,4 +69,14 @@ const { title = SITE.title, description, permalink, image } = Astro.props;
   } else {
     document.documentElement.classList.add("dark");
   }
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-N2XYYLCG6W"></script>
+<script type="text/partytown">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-N2XYYLCG6W');
 </script>
