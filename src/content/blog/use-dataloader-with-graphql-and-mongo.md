@@ -3,7 +3,7 @@ author: Yossi Spektor
 authorTwitter: SpektorYossi
 category: software
 title: "How To Solve GraphQL N+1 Problem By Using Custom Dataloaders"
-date: "2021-05-1T11:41:03.284Z"
+date: "2021-05-01T11:41:03.284Z"
 description: "How To Solve GraphQL N+1 Problem Using Dataloader and Using MongoDB"
 tags:
   - mongodb
