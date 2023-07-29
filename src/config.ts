@@ -43,5 +43,5 @@ export const PAGE_SIZE = 8
 export const USE_POST_IMG_OVERLAY = false
 export const USE_MEDIA_THUMBNAIL = true
 
-export const USE_AUTHOR_CARD = true
+export const USE_AUTHOR_CARD = false
 export const USE_SUBSCRIPTION = false /* works only when USE_AUTHOR_CARD is true */
