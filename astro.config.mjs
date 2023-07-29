@@ -35,6 +35,11 @@ export default defineConfig( /** @type {import('astro').AstroUserConfig} */{
   server: {
     port: 3000,         // The port to run the dev server on.
   },
+  markdown: {
+    shikiConfig: {
+      theme: 'monokai'
+    }
+  },
   integrations: [mdx(),
   // markdoc(), // disabled now due to an issue with Vercel builds
   svelte(), tailwind({
