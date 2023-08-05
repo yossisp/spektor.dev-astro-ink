@@ -33,14 +33,17 @@ module.exports = {
                         'blockquote > p::before, p::after': {
                             color: colors.primary,
                         },
+                        '--tw-prose-code': theme('colors.white'),
+                        '--tw-prose-strong': theme('colors.white'),
+                        '--tw-prose-bold': theme('colors.white'),
                     },
                 },
                 DEFAULT: {
                     css: {
                         a: {
-                            color: colors.dark.primary,
+                            color: colors.primary,
                               '&:hover': {
-                                color: colors.primary,
+                                color: colors.secondary,
                               },
                         },
                         blockquote: {
