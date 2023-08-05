@@ -7,6 +7,7 @@ import mdx from '@astrojs/mdx';
 import { defineConfig } from "astro/config";
 import netlify from "@astrojs/netlify/functions";
 import node from "@astrojs/node";
+import markdownTheme from './markdown-theme.json';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -37,7 +38,8 @@ export default defineConfig( /** @type {import('astro').AstroUserConfig} */{
   },
   markdown: {
     shikiConfig: {
-      theme: 'monokai'
+      // theme: 'vitesse-light'
+      theme: markdownTheme
     }
   },
   integrations: [mdx(),
