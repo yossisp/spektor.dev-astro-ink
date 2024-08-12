@@ -63,5 +63,14 @@ dependencies {
 ```
 The above string identifier takes the Maven values of groupId, artifactId and version, although Gradle refers to them as group, module and version.
 
+Below is the mapping between Maven and Gradle dependencies scopes:
+**compile** -> in most cases you should simply use the `implementation` configuration, particularly if you’re building an application or webapp. But if you’re building a library, you can learn about which dependencies should be declared using `api` configuration [here](https://docs.gradle.org/current/userguide/building_java_projects.html#sec:building_java_libraries).
+
+**runtime** -> use the `runtimeOnly` configuration.
+
+**test** -> Gradle distinguishes between those dependencies that are required to compile a project’s tests and those that are only needed to run them. Dependencies required for test compilation should be declared against the `testImplementation` configuration. Those that are only required for running the tests should use `testRuntimeOnly`.
+
+You can read more about `provided` and `import` scopes [here](https://docs.gradle.org/current/userguide/migrating_from_maven.html)
+
 ### Differences
 - One notable difference between the two tools is in how they manage version conflicts. Maven uses a "closest" match algorithm, whereas Gradle picks the newest. Don’t worry though, you have a lot of control over which versions are selected, as documented in Managing Transitive Dependencies.
