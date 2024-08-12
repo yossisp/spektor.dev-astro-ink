@@ -1,0 +1,28 @@
+---
+author: Yossi Spektor
+authorTwitter: SpektorYossi
+category: software
+title: "From Maven To Gradle"
+date: "2024-08-12T20:19:03.284Z"
+description: "Learn How To Transition From Maven To Gradle."
+tags:
+  - kotlin
+  - java
+  - maven
+  - gradle
+
+excerpt: Kotlin is a modern language which tries to simplify common actions which usually result in a lot of Java boilerplate. Its approach to concurrency is a breath of fresh air...
+---
+
+<div style="display:flex;justify-content:center;padding-right:10%;padding-bottom:50px;padding-top:30px;">
+    <img src="/images/blog/kotlin_logo.svg"
+    alt="Kotlin Logo"
+    style="margin:0;"
+    />
+</div>
+
+1. [What Is Gradle?](#what-is-gradle)
+
+### <a name="what-is-gradle"></a>What Is Gradle?
+TDB
+
