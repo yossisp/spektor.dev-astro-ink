@@ -23,6 +23,7 @@ excerpt: Kotlin is a modern language which tries to simplify common actions whic
 2. [Arrays](#arrays)
 3. [Condition Validation](#condition-validation)
 4. [Delegated Properties](#delegated-properties)
+5. [Functional Interfaces](#functional-interfaces)
 
 ### <a name="introduction"></a>Introduction
 It's been almost a year since I started to develop in Kotlin and it's been great so far! I love the language features and how it increases productivity as opposed to Java. This year was mostly about learning Kotlin and making the mental switch from Java. I feel that I'm now at a point to learn more idiomatic Kotlin and dive deeper into the language. This article summarizes all the new stuff I've learned and is more or less an eclectic choice of interesting features from [Kotlin official docs](https://kotlinlang.org/docs/home.html).
@@ -163,3 +164,15 @@ fun main() {
 }
 ```
 If `oldName` property was deprecated we can add a new property `newName`, deprecate `oldName` and use property delegation so that `newName` gets the value of `oldName` if it's still used somewhere in code.
+
+### <a name="functional-interfaces"></a>Functional Interfaces
+An interface with only one abstract method is called a functional interface, or a Single Abstract Method (SAM) interface. Functional interfaces are declared as such:
+```kotlin
+fun interface EvenPredicate {
+   fun invoke()
+}
+```
+You can then use lambda functions to implement functional interfaces:
+```kotlin
+val isEven = EvenPredicate { it % 2 == 0 }
+```
