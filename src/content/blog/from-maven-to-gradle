@@ -41,3 +41,27 @@ Here is a list of some of the main Maven phases and the Gradle tasks that they m
 **package** -> use the assemble task provided by the Base Plugin. This builds whatever is the appropriate package for the project; for example, a JAR for Java libraries or a WAR for traditional Java webapps.
 
 **verify** -> use the check task provided by the Base Plugin. This runs all verification tasks that are attached to it, which typically includes the unit tests, any static analysis tasks — such as Checkstyle — and others. If you want to include integration tests, you will have to configure these **manually**.
+
+**install** -> use the `publishToMavenLocal` task provided by the Maven Publish Plugin. Note that Gradle builds don’t require you to "install" artifacts as you have access to more appropriate features like inter-project dependencies and composite builds. **You should only use publishToMavenLocal for interoperating with Maven builds**.
+
+### Declaring Dependencies
+The Maven dependency below
+```xml
+<dependencies>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.12</version>
+    </dependency>
+</dependencies>
+```
+can be converted to the following Gradle dependency:
+```kotlin
+dependencies {
+    implementation("log4j:log4j:1.2.12")  
+}
+```
+The above string identifier takes the Maven values of groupId, artifactId and version, although Gradle refers to them as group, module and version.
+
+### Differences
+- One notable difference between the two tools is in how they manage version conflicts. Maven uses a "closest" match algorithm, whereas Gradle picks the newest. Don’t worry though, you have a lot of control over which versions are selected, as documented in Managing Transitive Dependencies.
