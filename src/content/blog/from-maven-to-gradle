@@ -26,3 +26,18 @@ excerpt: Kotlin is a modern language which tries to simplify common actions whic
 ### <a name="what-is-gradle"></a>What Is Gradle?
 TDB
 
+[Maven vs Gradle feature comparison](https://gradle.org/maven-vs-gradle)
+
+### Build Lifecycle
+Maven builds are based around the concept of build lifecycles that consist of a set of fixed phases while Gradle uses its own [build model](https://docs.gradle.org/current/userguide/build_lifecycle.html#build_lifecycle). For Maven users transitioning to Gradle, it provides a helper feature that can mimic Maven’s phases: lifecycle tasks.
+Here is a list of some of the main Maven phases and the Gradle tasks that they map to:
+
+**clean** -> use the clean task provided by the Base Plugin.
+
+**compile** -> use the classes task provided by the Java Plugin and other JVM language plugins. This compiles all classes for all source files of all languages and also performs resource filtering via the processResources task.
+
+**test** -> use the test task provided by the Java Plugin. It runs the unit tests, and more specifically, the tests that make up the test source set.
+
+**package** -> use the assemble task provided by the Base Plugin. This builds whatever is the appropriate package for the project; for example, a JAR for Java libraries or a WAR for traditional Java webapps.
+
+**verify** -> use the check task provided by the Base Plugin. This runs all verification tasks that are attached to it, which typically includes the unit tests, any static analysis tasks — such as Checkstyle — and others. If you want to include integration tests, you will have to configure these **manually**.
