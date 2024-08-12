@@ -147,6 +147,7 @@ dependencies {
     }
 }
 ```
+Lastly, if you want to share constraints between modules in a multi-module project you can use [Java Platform Plugin](https://docs.gradle.org/current/userguide/java_platform_plugin.html#java_platform_plugin).
 
 ### Differences
 - One notable difference between the two tools is in how they manage version conflicts. Maven uses a "closest" match algorithm, whereas Gradle picks the newest. Don’t worry though, you have a lot of control over which versions are selected, as documented in Managing Transitive Dependencies.
