@@ -72,5 +72,60 @@ Below is the mapping between Maven and Gradle dependencies scopes:
 
 You can read more about `provided` and `import` scopes [here](https://docs.gradle.org/current/userguide/migrating_from_maven.html)
 
+### Repositories
+Unlike Maven, it has no default repository and so you have to declare at least one. In order to have the same behavior as your Maven build, just configure Maven Central in your Gradle build, like this:
+```kotlin
+repositories {
+    mavenCentral()
+}
+```
+
+### Controlling dependency versions
+The existence of transitive dependencies means that you can very easily end up with multiple versions of the same dependency in your dependency graph. By default, Gradle will pick the newest version of a dependency in the graph, but that’s not always the right solution. That’s why it provides several mechanisms for controlling which version of a given dependency is resolved.
+
+#### Dependency Constraints
+Provides a way to enforce specific transitive dependency version across all the dependencies of a project:
+```kotlin
+dependencies {
+    implementation("org.apache.httpcomponents:httpclient") // note that version is not specified here
+    constraints {
+        implementation("org.apache.httpcomponents:httpclient:4.5.3") {
+            because("previous versions have a bug impacting this application")
+        }
+        implementation("commons-codec:commons-codec:1.11") {
+            because("version 1.9 pulled from httpclient has bugs affecting this application")
+        }
+    }
+}
+```
+In the example, all versions are omitted from the dependency declaration. Instead, the versions are defined in the constraints block. The version definition for `commons-codec:1.11` is only taken into account if `commons-codec` is brought in as transitive dependency, since `commons-codec` is not defined as dependency in the project. Otherwise, the constraint has no effect.
+
+#### Bills of Materials (Maven BOMs)
+Maven allows you to share dependency constraints by defining dependencies inside a <dependencyManagement> section of a POM file that has a packaging type of pom. This special type of POM (a BOM) can then be imported into other POMs so that you have consistent library versions across your projects.
+Gradle can use such BOMs for the same purpose, using a special dependency syntax based on platform() and enforcedPlatform() methods. You simply declare the dependency in the normal way, but wrap the dependency identifier in the appropriate method, as shown in this example that "imports" the Spring Boot Dependencies BOM:
+```kotlin
+dependencies {
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:1.5.8.RELEASE"))  
+    implementation("com.google.code.gson:gson")  
+    implementation("dom4j:dom4j")
+}
+```
+
+#### Overriding Transitive Versions
+Gradle also allows to force dependency version on dependency level:
+```kotlin
+dependencies {
+    implementation("org.apache.httpcomponents:httpclient:4.5.4")
+    implementation("commons-codec:commons-codec") {
+        version {
+            strictly("1.9")
+        }
+    }
+}
+```
+Using the above method may cause [issues](https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#sec:strict-version-consequences) to consumers of the a module.
+
+
+
 ### Differences
 - One notable difference between the two tools is in how they manage version conflicts. Maven uses a "closest" match algorithm, whereas Gradle picks the newest. Don’t worry though, you have a lot of control over which versions are selected, as documented in Managing Transitive Dependencies.
