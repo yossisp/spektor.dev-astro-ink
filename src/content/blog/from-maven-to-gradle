@@ -125,7 +125,28 @@ dependencies {
 ```
 Using the above method may cause [issues](https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#sec:strict-version-consequences) to consumers of the a module.
 
-
+#### Exclude Dependencies
+Gradle's exclude handling is, in contrast to Maven, taking the whole dependency graph into account. So if there are multiple dependencies on a library, excludes are only exercised if all dependencies agree on them. For example:
+```kotlin
+dependencies {
+    implementation("commons-beanutils:commons-beanutils:1.9.4") {
+        exclude(group = "commons-collections", module = "commons-collections")
+    }
+    implementation("com.opencsv:opencsv:4.6") // depends on 'commons-beanutils' without exclude and brings back 'commons-collections'
+}
+```
+If we add `opencsv` as another dependency to our project above, which also depends on `commons-beanutils`, `commons-collection` is no longer excluded as `opencsv` itself does not exclude it.
+If we still want to have `commons-collections` excluded, because our combined usage of `commons-beanutils` and `opencsv` does not need it, we need to exclude it from the transitive dependencies of `opencsv` as well.
+```kotlin
+dependencies {
+    implementation("commons-beanutils:commons-beanutils:1.9.4") {
+        exclude(group = "commons-collections", module = "commons-collections")
+    }
+    implementation("com.opencsv:opencsv:4.6") {
+        exclude(group = "commons-collections", module = "commons-collections")
+    }
+}
+```
 
 ### Differences
 - One notable difference between the two tools is in how they manage version conflicts. Maven uses a "closest" match algorithm, whereas Gradle picks the newest. Don’t worry though, you have a lot of control over which versions are selected, as documented in Managing Transitive Dependencies.
