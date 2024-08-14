@@ -40,13 +40,20 @@ Multi-project builds include one root project and any number of subprojects.
 
 - **Plugins** are used to extend Gradle’s capability and optionally contribute tasks to a project.
 
+#### Project Structure
+ ![Gradle Project Structure](/images/blog/gradle-project-structure.png)
 
+Where:
+1. Gradle directory to store wrapper files and more
+2. Gradle version catalog for dependency management
+3. Gradle wrapper scripts
+4. Gradle settings file to define a root project name and subprojects
+5. Gradle build scripts of the two subprojects - subproject-a and subproject-b
+6. Source code and/or additional files for the projects
 
-
-
-
-
-
+#### Gradle Wrapper
+Similar to Maven wrapper Gradle has one. It's recommended to invoke Gradle wrapper instead of a global Gradle executable because the wrapper contains the Gradle version the project uses
+and as a result builds will be more reproducible.
 
 [Maven vs Gradle feature comparison](https://gradle.org/maven-vs-gradle)
 
