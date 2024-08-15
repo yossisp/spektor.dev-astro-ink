@@ -78,19 +78,67 @@ The Maven dependency below
 ```xml
 <dependencies>
     <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.12</version>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>33.2.1-jre</version>
     </dependency>
 </dependencies>
 ```
 can be converted to the following Gradle dependency:
 ```kotlin
 dependencies {
-    implementation("log4j:log4j:1.2.12")  
+    implementation("com.google.guava:guava:33.2.1-jre")  
 }
 ```
 The above string identifier takes the Maven values of groupId, artifactId and version, although Gradle refers to them as group, module and version.
+
+Gradle keeps track of dependencies used in a project in `libs.versions.toml` file which contains the information about libraries, versions and plugins. It is recommended to keep the file as the source of truth regarding dependencies. It allows to set a dependency version once and then re-use the dependency + version setting across multiple subprojects, for example, given this `libs.versions.toml`:
+```toml
+[versions]
+guava = "33.2.1-jre"
+
+[libraries]
+mockitoCore = { module = "com.google.guava:guava", version.ref = "guava" }
+```
+the `guava` dependency can be used like in `build.gradle.kts`:
+```kotlin
+dependencies {
+    implementation(libs.guava) 
+}
+```
+### Tasks
+Tasks are Gradle unit of work. For example, `./gradlew build` executes `build` task. Tasks can depend on other tasks (for example, `:app:compileJava` task must complete first before `build`).
+
+### Plugins
+Just like Maven, Gradle uses plugins for similar purposes like adding new tasks, configurations, or other build-related capabilities. A special kind of plugin is [convention plugin](https://docs.gradle.org/current/samples/sample_convention_plugins.html) which allows to re-use build logic across multiple projets.
+
+### Incremental Builds
+An incremental build is a build that avoids running tasks whose inputs have not changed since the previous build. For incremental builds to work, tasks must define their inputs and outputs. If inputs or outputs changed Gradle will execute the task otherwise it will skip it. Incremental builds are always enabled, and the best way to see them in action is to turn on verbose mode, for example: `./gradlew compileJava --console=verbose`:
+```bash
+> Task :buildSrc:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :buildSrc:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :buildSrc:compilePluginsBlocks UP-TO-DATE
+> Task :buildSrc:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :buildSrc:generateScriptPluginAdapters UP-TO-DATE
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :list:compileJava UP-TO-DATE
+> Task :utilities:compileJava UP-TO-DATE
+> Task :app:compileJava UP-TO-DATE
+```
+`UP-TO-DATE` is printed next to the task if its inputs/outputs didn't change. This feature is very useful when there're several subprojects and only a few files were changed. For example, let's say there's module `A` which depends on module `B` which depends on module `C`. If a file in `B` was changed full build will still build all modules. However with incremental builds only `B` module will be re-compiled as well as module `A` because it depends on module `B`. Incremental build will also be helpful if only a single file is changed in a project such that other files which don't depend on it are not re-build.
+
+### Build Caching
+Build caching helps save results when you switch between Git branches or want to re-use previous output in CI environments. For example, after you first build a project and then build it again incremental build feature will be used (you should see `UP-TO-DATE` in verbose mode). Let's say you then run `./gradlew clean` which deletes build output. When you run `./gradlew clean` Gradle will fetch the build output from its cache and you should see `FROM-CACHE` next to tasks in verbose mode. Gradle saves tasks outputs in global build cache which is located at `~/.gradle/caches/` in Unix/Mac OS. Gradle will also periodically remove cached outputs to free disk space. 
+
+As you can imagine this feature can be very nice in CI builds as shared modules can be built once and then the build outputs can be re-used by different applications.
+
+### Dependencies Scopes
 
 Below is the mapping between Maven and Gradle dependencies scopes:
 **compile** -> in most cases you should simply use the `implementation` configuration, particularly if you’re building an application or webapp. But if you’re building a library, you can learn about which dependencies should be declared using `api` configuration [here](https://docs.gradle.org/current/userguide/building_java_projects.html#sec:building_java_libraries).
