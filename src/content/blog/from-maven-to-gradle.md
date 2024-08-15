@@ -4,7 +4,7 @@ authorTwitter: SpektorYossi
 category: software
 title: "From Maven To Gradle: Crash Course"
 date: "2024-08-12T20:19:03.284Z"
-description: "Learn How To Transition From Maven To Gradle."
+description: "Learn Gradle Fundamentals And How To Transition From Maven To Gradle."
 tags:
   - kotlin
   - java
