@@ -57,22 +57,6 @@ and as a result builds will be more reproducible.
 
 [Maven vs Gradle feature comparison](https://gradle.org/maven-vs-gradle)
 
-### Build Lifecycle
-Maven builds are based around the concept of build lifecycles that consist of a set of fixed phases while Gradle uses its own [build model](https://docs.gradle.org/current/userguide/build_lifecycle.html#build_lifecycle). For Maven users transitioning to Gradle, it provides a helper feature that can mimic Maven’s phases: lifecycle tasks.
-Here is a list of some of the main Maven phases and the Gradle tasks that they map to:
-
-**clean** -> use the clean task provided by the Base Plugin.
-
-**compile** -> use the classes task provided by the Java Plugin and other JVM language plugins. This compiles all classes for all source files of all languages and also performs resource filtering via the processResources task.
-
-**test** -> use the test task provided by the Java Plugin. It runs the unit tests, and more specifically, the tests that make up the test source set.
-
-**package** -> use the assemble task provided by the Base Plugin. This builds whatever is the appropriate package for the project; for example, a JAR for Java libraries or a WAR for traditional Java webapps.
-
-**verify** -> use the check task provided by the Base Plugin. This runs all verification tasks that are attached to it, which typically includes the unit tests, any static analysis tasks — such as Checkstyle — and others. If you want to include integration tests, you will have to configure these **manually**.
-
-**install** -> use the `publishToMavenLocal` task provided by the Maven Publish Plugin. Note that Gradle builds don’t require you to "install" artifacts as you have access to more appropriate features like inter-project dependencies and composite builds. **You should only use publishToMavenLocal for interoperating with Maven builds**.
-
 ### Declaring Dependencies
 The Maven dependency below
 ```xml
@@ -138,8 +122,56 @@ Build caching helps save results when you switch between Git branches or want to
 
 As you can imagine this feature can be very nice in CI builds as shared modules can be built once and then the build outputs can be re-used by different applications.
 
-### Dependencies Scopes
+### Sharing Build Settings Between Projects
+Suppose there're many modules in a Gradle project. All of the modules apply plugins which enforce style conventions, look for code bugs, lint etc. Instead of specifying these plugins manually in each of the modules we can specify them once in what is called plugin convention file and then import this file in each of the individual modules. A special folder called `buildSrc` is recognized by Gradle for these purposes. Consider the following project structure:
+```
+├── module-a
+│   └── build.gradle.kts
+├── module-b
+│   └── build.gradle.kts
+├── buildSrc
+│   ├── build.gradle.kts
+│   ├── settings.gradle.kts
+│   ├── src
+│   │   ├── main
+│   │   │   └── kotlin
+│   │   │       ├── myproject.my-conventions.gradle.kts
+└── settings.gradle.kts
+```
+and the below is the contents of `myproject.my-conventions.gradle.kts`:
+```kotlin
+plugins {
+    java
+    checkstyle
+}
+```
+Then each module can import the convention plugin in its `build.gradle.kts` like this:
+```plugins {
+    id("myproject.library-conventions")
+}
 
+dependencies {
+    ...
+}
+```
+
+### Build Lifecycle
+Maven builds are based around the concept of build lifecycles that consist of a set of fixed phases while Gradle uses its own [build model](https://docs.gradle.org/current/userguide/build_lifecycle.html#build_lifecycle). For Maven users transitioning to Gradle, it provides a helper feature that can mimic Maven’s phases: lifecycle tasks.
+Here is a list of some of the main Maven phases and the Gradle tasks that they map to:
+
+**clean** -> use the clean task provided by the Base Plugin.
+
+**compile** -> use the classes task provided by the Java Plugin and other JVM language plugins. This compiles all classes for all source files of all languages and also performs resource filtering via the processResources task.
+
+**test** -> use the test task provided by the Java Plugin. It runs the unit tests, and more specifically, the tests that make up the test source set.
+
+**package** -> use the assemble task provided by the Base Plugin. This builds whatever is the appropriate package for the project; for example, a JAR for Java libraries or a WAR for traditional Java webapps.
+
+**verify** -> use the check task provided by the Base Plugin. This runs all verification tasks that are attached to it, which typically includes the unit tests, any static analysis tasks — such as Checkstyle — and others. If you want to include integration tests, you will have to configure these **manually**.
+
+**install** -> use the `publishToMavenLocal` task provided by the Maven Publish Plugin. Note that Gradle builds don’t require you to "install" artifacts as you have access to more appropriate features like inter-project dependencies and composite builds. **You should only use publishToMavenLocal for interoperating with Maven builds**.
+
+### Dependencies Scopes
 Below is the mapping between Maven and Gradle dependencies scopes:
 **compile** -> in most cases you should simply use the `implementation` configuration, particularly if you’re building an application or webapp. But if you’re building a library, you can learn about which dependencies should be declared using `api` configuration [here](https://docs.gradle.org/current/userguide/building_java_projects.html#sec:building_java_libraries).
 
